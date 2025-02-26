@@ -33,9 +33,9 @@ OBJET = $(addprefix $(OBJDIR)/, \
 
 endif
 
-CXX        = g++-9
-CUDA       = /usr/local/cuda-12.0
-CXXCUDA    = /usr/bin/g++-9
+CXX        = g++-11
+CUDA       = /usr/local/cuda-12.8
+CXXCUDA    = /usr/bin/g++-11
 NVCC       = $(CUDA)/bin/nvcc
 
 ifdef gpu
@@ -63,7 +63,7 @@ $(OBJDIR)/GPU/GPUEngine.o: GPU/GPUEngine.cu
 	$(NVCC) -G -maxrregcount=0 --ptxas-options=-v --compile --compiler-options -fPIC -ccbin $(CXXCUDA) -m64 -g -I$(CUDA)/include -gencode=arch=compute_$(ccap),code=sm_$(ccap) -o $(OBJDIR)/GPU/GPUEngine.o -c GPU/GPUEngine.cu
 else
 $(OBJDIR)/GPU/GPUEngine.o: GPU/GPUEngine.cu
-	$(NVCC) -maxrregcount=0 --ptxas-options=-v --compile --compiler-options -fPIC -ccbin $(CXXCUDA) -m64 -O2 -I$(CUDA)/include -gencode=arch=compute_$(ccap),code=sm_$(ccap) -o $(OBJDIR)/GPU/GPUEngine.o -c GPU/GPUEngine.cu
+	$(NVCC) -maxrregcount=0 --ptxas-options=-v --compile --compiler-options -fPIC -ccbin $(CXXCUDA) -m64 -O2 -I$(CUDA)/include -gencode=arch=compute_60,code=sm_60 -gencode=arch=compute_61,code=sm_61 -gencode=arch=compute_70,code=sm_70 -gencode=arch=compute_75,code=sm_75 -gencode=arch=compute_80,code=sm_80 -gencode=arch=compute_86,code=sm_86 -gencode=arch=compute_89,code=sm_89 -gencode=arch=compute_90,code=sm_90 -gencode=arch=compute_100,code=sm_100 -gencode=arch=compute_120,code=sm_120 -o $(OBJDIR)/GPU/GPUEngine.o -c GPU/GPUEngine.cu
 endif
 endif
 
